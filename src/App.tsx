@@ -1,12 +1,12 @@
 import React from "react"
+import { Box } from "@chakra-ui/react"
+import { RouterProvider } from "react-router-dom"
+import { router } from "./routes"
+
 
 export function App() {
 
   return (
-    <>
-      <div>
-        Hello World
-      </div>
-    </>
+    <RouterProvider router={router} />
   )
 }
