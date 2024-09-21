@@ -1,7 +1,21 @@
-import { Box, Button, Flex, Grid, GridItem, Img, Input, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Img, Input, Select, Text } from "@chakra-ui/react"
 import noDataLogo from '../../../assets/no_data_logo.svg'
+import { MagnifyingGlass } from "@phosphor-icons/react"
 
 export function Dahsboard() {
+
+  const options = [
+    {
+      label: 'AAS1', value: 'AAS1'
+    },
+    {
+      label: 'opc.tcp://0.0.0.0:4840', value: 'opc.tcp://0.0.0.0:4840'
+    },
+    {
+      label: 'AAS3', value: 'AAS3'
+    }
+  ]
+
   return (
     <>
       <Box w='96%' margin='1% auto auto auto'>
@@ -11,9 +25,16 @@ export function Dahsboard() {
             <Box width='30%'>
               <form>
                 <Flex justifyContent='space-between' gap={5} alignItems='center'>
-                  <Input bg='white' focusBorderColor="greenPigment.100" placeholder="Selecione o Digital Twin" width='60%'/>
+                  <Select bg='white' focusBorderColor="greenPigment.100" placeholder="Selecione o Digital Twin" width='60%'>
+                    {options && options.map((opt) => {
+                      return (
+                        <option value={opt.value}>{opt.label}</option>
+                      )
+                    })}
+                  </Select>
+                  {/* <Input bg='white' focusBorderColor="greenPigment.100" placeholder="Selecione o Digital Twin" width='60%' /> */}
                   <Button bg='white' variant='outline' colorScheme="teal" size='md'>Cancelar</Button>
-                  <Button bg='greenPigment.100' color='white' size='md' sx={{
+                  <Button leftIcon={<MagnifyingGlass />} bg='greenPigment.100' color='white' size='md' sx={{
                     "&:hover": {
                       bg: "mediumSeaGreen.100"
                     }
