@@ -1,5 +1,6 @@
 export const colors = {
   white: "#fff",
+  whiteDifferent: '#f7f7f8',
   mintCream: {
     100: '#EFFEF7',
     200: '#EFFEF7',
@@ -65,6 +66,9 @@ export const colors = {
   aeroBlue: {
     100: '#B8FADD',
   },
+  softgray: {
+    100: '#757575'
+  }
 } as const
 
 

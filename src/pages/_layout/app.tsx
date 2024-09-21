@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../../components/Header";
+import { Box, Flex } from "@chakra-ui/react";
 
 export function AppLayout() {
   return (
-    <div>
+    <Flex flexDirection='column' minH='100vh'>
       <Header />
-      <div>
+      <Flex bg='whiteDifferent' flexDirection='column' flex={1}>
         <Outlet />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
