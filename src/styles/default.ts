@@ -67,6 +67,7 @@ export const colors = {
     100: '#B8FADD',
   },
   softgray: {
+    50: '#e6e6e6',
     100: '#757575'
   }
 } as const

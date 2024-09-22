@@ -17,6 +17,7 @@ export const AuthContext = createContext({} as AuthenticationContextType)
 
 export function AuthProvider({ children }: AuthProviderProps) {
 
+
   const authenticate = useCallback(async (data: Authentication) => {
     const { email, password } = data
     console.log(`authenticating... ${email} ${password}`)

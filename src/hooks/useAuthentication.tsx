@@ -2,8 +2,11 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { SignInForm } from "../types/authentication";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export function useAuthentication() {
+
+  const navigate = useNavigate()
 
   const { authenticate } = useContext(AuthContext)
 
@@ -14,6 +17,7 @@ export function useAuthentication() {
   async function handleSignIn(data: SignInForm) {
     try {
       await signIn(data)
+      navigate('/')
     } catch (error) {
       console.error(error)
     }

@@ -1,7 +1,6 @@
-import { Box, Flex, IconButton, Img, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
+import { Box, Flex, Img } from "@chakra-ui/react"
 import logoMiniWhite from '../../assets/logo_mini_white.svg'
 import { UserInfo } from "./UserInfo"
-import { CaretDown } from '@phosphor-icons/react'
 
 export function Header() {
 
