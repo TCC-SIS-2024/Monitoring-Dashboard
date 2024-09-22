@@ -1,6 +1,8 @@
 import { Box, Divider, Flex, Grid, GridItem, Input } from "@chakra-ui/react";
 import { CardData } from "./CardData";
 import { Chart } from "./Chart";
+import { CurrentTemperature } from "../CurrentTemperature";
+import { QuantityAnomalies } from "../QuantityAnomalies";
 
 export function MainChart() {
   return (
@@ -22,10 +24,14 @@ export function MainChart() {
             </CardData>
           </GridItem>
           <GridItem colSpan={2}>
-            <CardData title="Temperatura Atual">asedfasdf</CardData>
+            <CardData isCurrentTemperature title="Temperatura Atual">
+              <CurrentTemperature />
+            </CardData>
           </GridItem>
           <GridItem colSpan={2}>
-            <CardData title="Quantidade de Anomalias">aefaef</CardData>
+            <CardData isQtdAnomaly title="Quantidade de Anomalias">
+              <QuantityAnomalies />
+            </CardData>
           </GridItem>
         </Grid>
       </Box >

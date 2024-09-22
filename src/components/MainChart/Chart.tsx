@@ -15,7 +15,7 @@ export function Chart() {
     const now = new Date();
 
     setAverageData((prevData) => [
-      ...prevData,
+      ...prevData.slice(-49),
       {
         time: now.toLocaleTimeString(),
         value: average
@@ -31,7 +31,7 @@ export function Chart() {
       const now = new Date();
 
       setData((prevData) => [
-        ...prevData,
+        ...prevData.slice(-49),
         {
           time: now.toLocaleTimeString(),
           value: newTemp,
@@ -39,7 +39,7 @@ export function Chart() {
       ]);
 
       sethumidityData((prevData) => [
-        ...prevData,
+        ...prevData.slice(-49),
         {
           time: now.toLocaleTimeString(),
           value: newHumidity,
