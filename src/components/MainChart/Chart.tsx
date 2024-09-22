@@ -1,56 +1,25 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useRef, useState } from 'react';
+import { useSocket } from '../../hooks/useSocket';
+import { SensorData } from '../../interfaces/SensorData';
 
 export function Chart() {
+  const { sensorData } = useSocket()
 
-  const [data, setData] = useState<{ time: string; value: number }[]>([]);
-  const [humidityData, sethumidityData] = useState<{ time: string; value: number }[]>([]);
-  const [averageData, setAverageData] = useState<{ time: string; value: number }[]>([]);
+  const [data, setData] = useState<SensorData[]>([]);
   // const [dataZoomStart, setDataZoomStart] = useState(0);
   // const [dataZoomEnd, setDataZoomEnd] = useState(100);
 
   useEffect(() => {
 
-    const average = data.reduce((accumulator, y) => accumulator + y.value, 0) / data.length
-    const now = new Date();
+    if (sensorData) {
+      setData((prev) => [
+        ...prev.slice(-49),
+        sensorData
+      ])
+    }
 
-    setAverageData((prevData) => [
-      ...prevData.slice(-49),
-      {
-        time: now.toLocaleTimeString(),
-        value: average
-      },
-    ]);
-  }, [data])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newTemp = Math.random() * 30;
-      const newHumidity = Math.random() * 100;
-
-      const now = new Date();
-
-      setData((prevData) => [
-        ...prevData.slice(-49),
-        {
-          time: now.toLocaleTimeString(),
-          value: newTemp,
-        },
-      ]);
-
-      sethumidityData((prevData) => [
-        ...prevData.slice(-49),
-        {
-          time: now.toLocaleTimeString(),
-          value: newHumidity,
-        },
-      ]);
-
-    }, 1000);
-
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [sensorData])
 
   const getOption = () => ({
     title: {
@@ -66,7 +35,7 @@ export function Chart() {
     },
     xAxis: {
       type: 'category',
-      data: data.map((d) => d.time),
+      data: data.map((d) => d.now),
     },
     // dataZoom: [
     //   {
@@ -104,7 +73,7 @@ export function Chart() {
       {
         name: 'Temperature',
         type: 'line',
-        data: data.map((d) => d.value),
+        data: data.map((d) => d.temperature),
         lineStyle: {
           color: '#0FA968',
         },
@@ -113,7 +82,7 @@ export function Chart() {
       {
         name: 'AverageTemperature',
         type: 'line',
-        data: averageData.map((d) => d.value),
+        data: data.map((d) => d.averageTemperature),
         lineStyle: {
           color: '#FBC62F',
         },
@@ -122,7 +91,7 @@ export function Chart() {
       {
         name: 'Humidity',
         type: 'line',
-        data: humidityData.map((d) => d.value),
+        data: data.map((d) => d.humidity),
         lineStyle: {
           color: '#00C7F2',
         },

@@ -13,7 +13,7 @@ export function MainChart() {
           <Input bg='white' placeholder='Select Date and Time' w='14%' size='sm' type='datetime-local' />
         </Flex>
       </Box>
-      <Box w='100%' h='710px' >
+      <Box w='100%' h='802px' >
         <Grid h='100%'
           templateRows='repeat(2, 1fr)'
           templateColumns='repeat(7, 1fr)'
