@@ -1,5 +1,6 @@
 import { Box, Divider, Flex, Grid, GridItem, Input } from "@chakra-ui/react";
 import { CardData } from "./CardData";
+import { Chart } from "./Chart";
 
 export function MainChart() {
   return (
@@ -16,7 +17,9 @@ export function MainChart() {
           templateColumns='repeat(7, 1fr)'
           gap={6}>
           <GridItem rowSpan={2} colSpan={5}>
-            <CardData isCahrt title='Dashboard'>sergserg</CardData>
+            <CardData isCahrt title='Dashboard'>
+              <Chart />
+            </CardData>
           </GridItem>
           <GridItem colSpan={2}>
             <CardData title="Temperatura Atual">asedfasdf</CardData>
