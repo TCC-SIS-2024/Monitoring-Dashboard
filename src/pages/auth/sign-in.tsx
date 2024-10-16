@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Text, Image, Flex, Button, FormControl, FormLabel, Box, FormErrorMessage, FormHelperText } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, Text, Image, Flex, Button, FormControl, FormLabel, Box, FormErrorMessage, FormHelperText } from '@chakra-ui/react'
 import logoImg from '../../assets/logo.svg'
 import { Input } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
