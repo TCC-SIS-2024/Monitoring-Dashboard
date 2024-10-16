@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { SignInForm } from "../types/authentication";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {AxiosError, AxiosResponse} from "axios";
 import {useToast} from "@chakra-ui/react";
@@ -9,12 +9,16 @@ export function useAuthentication() {
 
   const navigate = useNavigate()
   const toast = useToast()
-
-  const { authenticate } = useContext(AuthContext)
+  const { authenticate, signOut } = useContext(AuthContext)
 
   const { mutateAsync: signIn } = useMutation({
     mutationFn: authenticate
   })
+
+  const { mutateAsync: logOut } = useMutation({
+    mutationFn: signOut
+  })
+
 
   async function handleSignIn(data: SignInForm) {
     try {
@@ -62,9 +66,18 @@ export function useAuthentication() {
       console.error(error)
     }
   }
+  async function handleLogOut() {
+    try {
+      await logOut()
+      navigate('/sign-in')
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
 
   return {
-    handleSignIn
+    handleSignIn,
+    handleLogOut
   }
 }
