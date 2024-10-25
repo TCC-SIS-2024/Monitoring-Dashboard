@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Grid, GridItem, Input } from "@chakra-ui/react";
+import { Box, Separator, Flex, Grid, GridItem, Input } from "@chakra-ui/react";
 import { CardData } from "./CardData";
 import { Chart } from "./Chart";
 import { CurrentTemperature } from "../CurrentTemperature";
@@ -7,7 +7,7 @@ import { QuantityAnomalies } from "../QuantityAnomalies";
 export function MainChart() {
   return (
     <>
-      <Divider />
+      <Separator />
       <Box w='100%' h='60px'>
         <Flex alignItems='center' justifyContent='flex-end' h='100%'>
           <Input bg='white' placeholder='Select Date and Time' w='14%' size='sm' type='datetime-local' />

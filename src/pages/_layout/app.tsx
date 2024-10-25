@@ -1,29 +1,27 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
-import { Flex, useToast } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useSocket } from "../../hooks/useSocket";
 import { useEffect } from "react";
+import {toaster} from "../../components/ui/toaster.tsx";
 
 export function AppLayout() {
 
   const { isConnected } = useSocket()
-  const toast = useToast()
 
   useEffect(() => {
     if (isConnected) {
-      toast({
+      toaster.create({
         description: "Conectado ao socket",
-        status: 'success',
+        type: 'success',
         duration: 3000,
-        isClosable: true,
       })
     }
     else {
-      toast({
+      toaster.create({
         description: "Desconectado ao socket",
-        status: 'error',
+        type: 'error',
         duration: 3000,
-        isClosable: true,
       })
     }
   }, [isConnected])

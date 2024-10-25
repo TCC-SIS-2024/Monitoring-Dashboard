@@ -1,43 +1,50 @@
-import {Avatar, Text, Flex, Menu, MenuButton, MenuList, MenuItem, Button} from "@chakra-ui/react";
-import { CaretDown } from "@phosphor-icons/react";
+import {Text, Flex} from "@chakra-ui/react";
+import {CaretDown} from "@phosphor-icons/react";
 import {useQuery} from "@tanstack/react-query";
 import {useContext} from "react";
 import {AuthContext} from "../../contexts/AuthContext.tsx";
 import {useAuthentication} from "../../hooks/useAuthentication.tsx";
-import { Skeleton } from '@chakra-ui/react'
+import {Skeleton} from '@chakra-ui/react'
+import {MenuContent, MenuItem, MenuRoot, MenuTrigger} from "../ui/menu.tsx";
+import {Button} from "../ui/button.tsx";
+import {Avatar} from "../ui/avatar.tsx";
 
 export function UserInfo() {
 
-  const { getCurrentUser } = useContext(AuthContext)
+  const {getCurrentUser} = useContext(AuthContext)
 
-  const { data: currentUser, isLoading: isLoadingCurrentUser } = useQuery({
+  const {data: currentUser, isLoading: isLoadingCurrentUser} = useQuery({
     queryKey: ['currentUser'],
     queryFn: getCurrentUser,
     staleTime: Infinity
   })
 
-  const { handleLogOut } = useAuthentication()
+  const {handleLogOut} = useAuthentication()
 
   return (
-    <>
-      <Menu>
-        <MenuButton bg='greenPigment.100' color='white' as={Button} rightIcon={<CaretDown />} sx={{
-          "&:hover": {
+      <MenuRoot>
+        <MenuTrigger asChild>
+          <Button bg='greenPigment.100' color='white' as={Button} _hover={{
             bg: 'greenPigment.100'
-          }
-        }}>
-          <Skeleton isLoaded={!isLoadingCurrentUser}>
-            <Flex gap={2.5} alignItems='center' justifyContent='space-between'>
-              <Avatar size='sm' src="https://bit.ly/dan-abramov" />
-              <Text color='white'>{currentUser?.username}</Text>
-            </Flex>
-          </Skeleton>
-        </MenuButton>
-        <MenuList>
-          <MenuItem onClick={() => handleLogOut()}>Sair</MenuItem>
-          <MenuItem>Editar perfil</MenuItem>
-        </MenuList>
-      </Menu>
-    </>
+          }}>
+            <Skeleton loading={!isLoadingCurrentUser}>
+              <Flex gap={2.5} alignItems='center' justifyContent='space-between'>
+                <Avatar size='sm' src="https://bit.ly/dan-abramov"/>
+                <Text color='white'>{currentUser?.username}</Text>
+              </Flex>
+              <CaretDown/>
+            </Skeleton>
+    <CaretDown size={30}/>
+          </Button>
+        </MenuTrigger>
+        <MenuContent>
+          <MenuItem _hover={{
+            cursor: 'pointer'
+          }} value={''} onClick={() => handleLogOut()}>Sair</MenuItem>
+          <MenuItem _hover={{
+            cursor: 'pointer'
+          }} value='sair'>Editar perfil</MenuItem>
+        </MenuContent>
+      </MenuRoot>
   )
 }

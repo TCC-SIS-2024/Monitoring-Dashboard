@@ -4,11 +4,11 @@ import { SignInForm } from "../types/authentication";
 import {useMutation} from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {AxiosError, AxiosResponse} from "axios";
-import {useToast} from "@chakra-ui/react";
+import {toaster} from "../components/ui/toaster.tsx";
+
 export function useAuthentication() {
 
   const navigate = useNavigate()
-  const toast = useToast()
   const { authenticate, signOut } = useContext(AuthContext)
 
   const { mutateAsync: signIn } = useMutation({
@@ -25,12 +25,10 @@ export function useAuthentication() {
       const response = await signIn(data)
       if (response !== undefined) {
         navigate('/')
-        toast({
+        toaster.create({
           description: "Logado com sucesso",
-          status: 'success',
-          duration: 3000,
-          position: "top",
-          isClosable: true,
+          type: 'success',
+          duration: 3000
         })
       }
     } catch (error) {
@@ -41,25 +39,21 @@ export function useAuthentication() {
           const payload: string = response.data.payload
 
           if (status === 404) {
-            toast({
+            toaster.create({
               title: payload,
               description: "Usuário não encontrado, verifique suas credenciais",
-              status: 'error',
+              type: 'error',
               duration: 3000,
-              position: "top",
-              isClosable: true,
             })
           }
 
         }
         else {
-          toast({
+          toaster.create({
             title: error.message,
             description: "Não foi possível se conectar ao backend",
-            status: 'error',
+            type: 'error',
             duration: 3000,
-            position: "top",
-            isClosable: true,
           })
         }
       }

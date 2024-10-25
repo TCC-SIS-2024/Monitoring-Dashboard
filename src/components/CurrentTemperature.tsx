@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Separator, Flex, Heading, Text } from "@chakra-ui/react";
 import { ChartLineUp, DropSimple } from "@phosphor-icons/react";
 import { useSocket } from "../hooks/useSocket";
 
@@ -15,7 +15,7 @@ export function CurrentTemperature() {
             <DropSimple color='#00C7F2' size={30} />
             <Text>Humidade baixa</Text>
           </Flex>
-          <Divider orientation='vertical' />
+          <Separator orientation='vertical' />
           <Flex w='100%' alignItems='center'>
             <ChartLineUp color="#FBC62F" size={30} />
             <Text>média {sensorData?.averageTemperature ? sensorData.averageTemperature.toFixed(2) : 0} ºC </Text>
