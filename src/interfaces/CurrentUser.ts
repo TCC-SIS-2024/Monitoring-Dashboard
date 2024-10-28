@@ -5,3 +5,11 @@ export interface CurrentUser {
   createdAt: string
   updatedAt: string
 }
+
+export interface ResponseUser {
+  id: string
+  email: string
+  username: string
+  created_at: string
+  updated_at: string
+}

@@ -1,10 +1,9 @@
-import {Text, Flex} from "@chakra-ui/react";
+import {Text, Flex, Skeleton} from "@chakra-ui/react";
 import {CaretDown} from "@phosphor-icons/react";
 import {useQuery} from "@tanstack/react-query";
 import {useContext} from "react";
 import {AuthContext} from "../../contexts/AuthContext.tsx";
 import {useAuthentication} from "../../hooks/useAuthentication.tsx";
-import {Skeleton} from '@chakra-ui/react'
 import {MenuContent, MenuItem, MenuRoot, MenuTrigger} from "../ui/menu.tsx";
 import {Button} from "../ui/button.tsx";
 import {Avatar} from "../ui/avatar.tsx";
@@ -27,14 +26,13 @@ export function UserInfo() {
           <Button bg='greenPigment.100' color='white' as={Button} _hover={{
             bg: 'greenPigment.100'
           }}>
-            <Skeleton loading={!isLoadingCurrentUser}>
+            <Skeleton loading={isLoadingCurrentUser}>
               <Flex gap={2.5} alignItems='center' justifyContent='space-between'>
                 <Avatar size='sm' src="https://bit.ly/dan-abramov"/>
                 <Text color='white'>{currentUser?.username}</Text>
+                <CaretDown size={30}/>
               </Flex>
-              <CaretDown/>
             </Skeleton>
-    <CaretDown size={30}/>
           </Button>
         </MenuTrigger>
         <MenuContent>

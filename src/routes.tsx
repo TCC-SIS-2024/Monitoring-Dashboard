@@ -4,6 +4,7 @@ import { AuthLayout } from "./pages/_layout/auth";
 import { SignIn } from "./pages/auth/sign-in";
 import { Dahsboard } from "./pages/app/dashboard/dashboard";
 import {Users} from "./pages/app/users/users.tsx";
+import {AssetAdministrationShells} from "./pages/app/aas/aas.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +18,11 @@ export const router = createBrowserRouter([
       {
         path: '/users',
         element: <Users />
-      }
+      },
+      {
+        path: '/asset-administration-shells',
+        element: <AssetAdministrationShells />
+      },
     ]
   },
   {

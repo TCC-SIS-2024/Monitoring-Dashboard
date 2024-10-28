@@ -92,7 +92,7 @@ export function Header() {
                       <AddressBook size={30}/>
                     </Flex>
                   </Box>
-                  <Box transition='0.3S ease' p='0 5px' h='40px' css={{
+                  <Box onClick={() => navigate('/asset-administration-shells')} transition='0.3S ease' p='0 5px' h='40px' css={{
                     "&:hover": {
                       cursor: "pointer",
                       bg: "greenPigment.100",

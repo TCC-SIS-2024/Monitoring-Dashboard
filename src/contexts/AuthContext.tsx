@@ -43,17 +43,8 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   }, [])
 
   const getCurrentUser = useCallback(async () => {
-    const userInformation = localStorage.getItem('userInformation')
-    if (userInformation) {
-      const localStorageUserInfo = JSON.parse(userInformation);
-      const accessToken: string = localStorageUserInfo.access_token
-
       try {
-        const response = await api.get('users/me/', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        })
+        const response = await api.get('users/me/')
 
         const payload = response.data.payload
 
@@ -77,9 +68,6 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
           }
         }
       }
-
-    }
-    return null
   }, [])
 
   const signOut = useCallback(async () => {

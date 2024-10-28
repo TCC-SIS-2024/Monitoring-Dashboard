@@ -1,24 +1,21 @@
-import {
-  Box,
-  Heading, HStack,
-  Stack,
-  Table,
-} from "@chakra-ui/react";
+import {useSearchParams} from "react-router-dom";
+import {z} from "zod";
+import {Box, Heading, HStack, Stack, Table} from "@chakra-ui/react";
+import {ResponseUser} from "../../../interfaces/CurrentUser.ts";
 import {
   PaginationItems,
   PaginationNextTrigger,
   PaginationPrevTrigger,
   PaginationRoot
 } from "../../../components/ui/pagination.tsx";
-import {UserService} from "../../../services/users.ts";
+import {AssetAdministrationShellService} from "../../../services/asset-administration-shell.ts";
 import {useQuery} from "@tanstack/react-query";
-import {useSearchParams} from 'react-router-dom'
-import {z} from 'zod'
-import {ResponseUser} from "../../../interfaces/CurrentUser.ts";
+import {AASResponse} from "../../../interfaces/AssetAdministrationShell.ts";
 
-export function Users() {
+export function AssetAdministrationShells () {
   const [searchParams, setSearchParams] = useSearchParams()
-  const usersService = new UserService()
+
+  const aasService = new AssetAdministrationShellService()
 
   const page = z.coerce
     .number()
@@ -30,9 +27,9 @@ export function Users() {
     .transform((page) => page)
     .parse(searchParams.get('page_size') ?? '10')
 
-  const {data: result, isLoading: isLoadingUsers} = useQuery({
-    queryKey: ['users', page, pageSize],
-    queryFn: () => usersService.findAll({page, pageSize}),
+  const {data: result, isLoading: isLoadingAAS} = useQuery({
+    queryKey: ['asset-administration-shells', page, pageSize],
+    queryFn: () => aasService.findAll({page, pageSize}),
   })
 
   function handlePaginate(page: number) {
@@ -54,25 +51,29 @@ export function Users() {
   return (
     <Box w='96%' margin='1% auto auto auto'>
       <Stack width="full" gap="5">
-        <Heading size="xl">Usuários</Heading>
+        <Heading size="xl">Asset Administration Shells</Heading>
         <Table.Root size="sm" variant="outline" striped>
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeader>Id</Table.ColumnHeader>
-              <Table.ColumnHeader>Nome do usuário</Table.ColumnHeader>
-              <Table.ColumnHeader>E-mail</Table.ColumnHeader>
-              <Table.ColumnHeader>Cargo</Table.ColumnHeader>
+              <Table.ColumnHeader>IdShort</Table.ColumnHeader>
+              <Table.ColumnHeader>Database endpoint</Table.ColumnHeader>
+              <Table.ColumnHeader>Modelagem JSON</Table.ColumnHeader>
+              <Table.ColumnHeader>host</Table.ColumnHeader>
+              <Table.ColumnHeader>porta</Table.ColumnHeader>
               <Table.ColumnHeader>Data de criação</Table.ColumnHeader>
               <Table.ColumnHeader>Ações</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {result?.payload.data.map((item: ResponseUser) => (
+            {result?.payload.data.map((item: AASResponse) => (
               <Table.Row key={item.id}>
                 <Table.Cell>{item.id}</Table.Cell>
-                <Table.Cell>{item.username}</Table.Cell>
-                <Table.Cell>{item.email}</Table.Cell>
-                <Table.Cell>admin</Table.Cell>
+                <Table.Cell>{item.id_short}</Table.Cell>
+                <Table.Cell>{item.database_endpoint}</Table.Cell>
+                <Table.Cell>{item.aas_modeling}</Table.Cell>
+                <Table.Cell>{item.host}</Table.Cell>
+                <Table.Cell>{item.port}</Table.Cell>
                 <Table.Cell>{item.created_at}</Table.Cell>
               </Table.Row>
             ))}
