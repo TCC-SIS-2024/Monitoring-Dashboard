@@ -1,7 +1,7 @@
 import React from "react";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {z} from "zod";
-import {Box, Flex, Heading, HStack, Input, Separator, Stack, Table} from "@chakra-ui/react";
+import {Box, Fieldset, Flex, Heading, HStack, Image, Input, Separator, Stack, Table} from "@chakra-ui/react";
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -9,30 +9,52 @@ import {
   PaginationRoot
 } from "../../../components/ui/pagination.tsx";
 import {AssetAdministrationShellService} from "../../../services/asset-administration-shell.ts";
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import {AASResponse} from "../../../interfaces/AssetAdministrationShell.ts";
 import {Button} from "../../../components/ui/button.tsx";
 import {ArrowFatLinesRight, MagnifyingGlass, Pencil, Plus, Trash} from "@phosphor-icons/react";
 import {Tooltip} from "../../../components/ui/tooltip.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {
+  DrawerBackdrop,
+  DrawerTrigger,
+  DrawerRoot,
+  DrawerContent,
+  DrawerCloseTrigger, DrawerBody, DrawerHeader
+} from "../../../components/ui/drawer.tsx";
+import logoImg from "../../../assets/logo.svg";
+import {Field} from "../../../components/ui/field.tsx";
+import {toaster} from "../../../components/ui/toaster.tsx";
+import {
+  aasFilterSchema,
+  AASFiltersSchema, createAssetAdministrationShellForm,
+  CreateAssetAdministrationShellForm
+} from "../../../types/asset-administration-shell.ts";
 
-const aasFilterSchema = z.object({
-  search: z.string().optional()
-})
-
-type AASFiltersSchema = z.infer<typeof aasFilterSchema>
 
 export function AssetAdministrationShells() {
   const [searchParams, setSearchParams] = useSearchParams()
   const aasService = new AssetAdministrationShellService()
   const search = searchParams.get('search')
+  const navigate = useNavigate()
 
-  const {register, handleSubmit} = useForm<AASFiltersSchema>({
+  const {
+    register,
+    handleSubmit
+  } = useForm<AASFiltersSchema>({
     resolver: zodResolver(aasFilterSchema),
     defaultValues: {
       search: search ?? ''
     }
+  })
+
+  const {
+    register: registerAasField,
+    handleSubmit: handleAasSubmit,
+    formState: {isSubmitting: isCreationAasSubmitting, errors}
+  } = useForm<CreateAssetAdministrationShellForm>({
+    resolver: zodResolver(createAssetAdministrationShellForm)
   })
 
   const page = z.coerce
@@ -45,9 +67,21 @@ export function AssetAdministrationShells() {
     .transform((page) => page)
     .parse(searchParams.get('page_size') ?? '10')
 
-  const {data: result, isLoading: isLoadingAAS} = useQuery({
+  const {data: result, isLoading: isLoadingAAS, refetch: refetchAAS} = useQuery({
     queryKey: ['asset-administration-shells', page, pageSize, search],
     queryFn: () => aasService.findAll({page, pageSize, search}),
+  })
+
+  const { mutateAsync: createAAS } = useMutation({
+    mutationFn: aasService.create,
+    onSuccess: () => {
+      refetchAAS()
+      toaster.create({
+        description: "Asset Administration Shell created successfully.",
+        type: 'success',
+        duration: 3000,
+      });
+    }
   })
 
   function handleSearch({search}: AASFiltersSchema) {
@@ -64,7 +98,7 @@ export function AssetAdministrationShells() {
 
   function handlePaginate(page: number) {
     setSearchParams((state) => {
-      state.set('page', (page + 1).toString())
+      state.set('page', page.toString())
 
       return state
     })
@@ -85,17 +119,78 @@ export function AssetAdministrationShells() {
           <Heading size="xl" fontSize='2xl' as='b' color='greenPigment.100'>Asset Administration Shells</Heading>
           <form onSubmit={handleSubmit(handleSearch)}>
             <Flex alignItems='center' gap={4}>
-              <Input focusBorderColor='mediumSeaGreen.100' placeholder='Pesquisar...' {...register('search')}/>
+              <Input placeholder='Pesquisar...' {...register('search')}/>
               <Tooltip openDelay={100} closeDelay={100} showArrow content='Pesquisar'>
                 <Button type='submit' disabled={isLoadingAAS} as='button' bg='greenPigment.100' color='white' onClick={() => null}>
                   <MagnifyingGlass size={32} weight="bold"/>
                 </Button>
               </Tooltip>
-              <Tooltip openDelay={100} closeDelay={100} showArrow content='Adicionar Asset Administration Shell'>
-                <Button as='button' bg='greenPigment.100' color='white' onClick={() => null}>
-                  <Plus size={32} weight="bold"/>
-                </Button>
-              </Tooltip>
+              <DrawerRoot placement='end' size='sm'>
+                <DrawerBackdrop/>
+                <DrawerTrigger>
+                  <Tooltip openDelay={100} closeDelay={100} showArrow content='Adicionar Asset Administration Shell'>
+                    <Button as='button' bg='greenPigment.100' color='white'>
+                      <Plus size={32} weight="bold"/>
+                    </Button>
+                  </Tooltip>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader p='32px 12px'>
+                    <Image _hover={{
+                      cursor: 'pointer'
+                    }} onClick={() => navigate('/')} src={logoImg} w='90px' m='0 auto'/>
+                  </DrawerHeader>
+                  <DrawerBody p='0 12px'>
+                    <form onSubmit={handleAasSubmit(createAAS)}>
+                      <Fieldset.Root size="lg" invalid>
+                        <Fieldset.Legend>Asset Administration Shell creation</Fieldset.Legend>
+                        <Fieldset.Content>
+                          <Field label="IdShort">
+                            <Input placeholder="IdShort" {...registerAasField('idShort')} />
+                          </Field>
+                          <Field label="Database endpoint">
+                            <Input placeholder="Database endpoint"  {...registerAasField('databaseEndpoint')}/>
+                          </Field>
+                          <Field label="Host">
+                            <Input placeholder="Host" {...registerAasField('host')} />
+                          </Field>
+                          <Field label="Porta">
+                            <Input type='number' placeholder="Porta" {...registerAasField('port', { valueAsNumber: true })} />
+                          </Field>
+                          <Field label="Moldeagem JSON">
+                            <Input placeholder="Modelagem" {...registerAasField('aasModeling')} />
+                          </Field>
+                          {
+                            !errors ? (<Fieldset.HelperText></Fieldset.HelperText>) : (
+                              <Fieldset.ErrorText>{errors.port?.message}</Fieldset.ErrorText>
+                            )
+                          }
+                          <Button
+                            // onClick={() => {
+                            //   hasErrors && toaster.create({
+                            //     description: 'Verifique os campos do formulário de login',
+                            //     duration: 3000,
+                            //     type: 'error',
+                            //     placement: 'top'
+                            //   })
+                            // }}
+                            type='submit'
+                            disabled={isCreationAasSubmitting}
+                            bg='greenPigment.100'
+                            color='white'
+                            size='lg'
+                            _hover={{
+                            bg: "mediumSeaGreen.100"
+                          }}>
+                            Adicionar Novo
+                          </Button>
+                        </Fieldset.Content>
+                      </Fieldset.Root>
+                    </form>
+                  </DrawerBody>
+                  <DrawerCloseTrigger />
+                </DrawerContent>
+              </DrawerRoot>
             </Flex>
           </form>
         </Flex>
@@ -150,17 +245,20 @@ export function AssetAdministrationShells() {
 
         <PaginationRoot
           defaultPage={1}
-          count={result?.payload.total * pageSize}
+          count={result?.payload.total ?? 1}
           pageSize={pageSize}
           page={page}
           onPageChange={(e) => handlePaginate(e.page)}
           onPageSizeChange={(e) => handlePageSize(e.pageSize)}
         >
-          <HStack wrap="wrap">
-            <PaginationPrevTrigger/>
-            <PaginationItems/>
-            <PaginationNextTrigger/>
-          </HStack>
+          <Flex alignItems='center'>
+            <HStack wrap="wrap">
+              <PaginationPrevTrigger/>
+              <PaginationItems/>
+              <PaginationNextTrigger/>
+            </HStack>
+            <Box>sighusdigu</Box>
+          </Flex>
         </PaginationRoot>
       </Stack>
     </Box>

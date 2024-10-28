@@ -9,3 +9,11 @@ export interface AASResponse {
   created_at: string
   updated_at: string
 }
+
+export interface AASPayload {
+  idShort: string
+  databaseEndpoint: string
+  modelingJson: string
+  host: string
+  port: number
+}

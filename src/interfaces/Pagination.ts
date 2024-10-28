@@ -3,8 +3,3 @@ export interface PaginationSearchParams {
   pageSize: number
   search?: string
 }
-
-export interface Service {
-
-  findAll(params: PaginationSearchParams): Promise<any>
-}

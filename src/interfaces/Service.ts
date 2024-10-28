@@ -1,0 +1,7 @@
+import {PaginationSearchParams} from "./Pagination.ts";
+
+export interface Service {
+
+  findAll(params: PaginationSearchParams): Promise<any>
+  create(payload: any): Promise<any>
+}
