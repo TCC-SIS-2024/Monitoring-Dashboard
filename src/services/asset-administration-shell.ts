@@ -3,13 +3,14 @@ import {api} from "../lib/axios.ts";
 
 export class AssetAdministrationShellService implements Service {
 
-  async findAll({page, pageSize}: PaginationSearchParams): Promise<any> {
+  async findAll({page, pageSize, search}: PaginationSearchParams): Promise<any> {
 
     try {
       const response = await api.get('asset-administration-shells/', {
         params: {
           page: page,
-          page_size: pageSize
+          page_size: pageSize,
+          search
         }
       })
 
