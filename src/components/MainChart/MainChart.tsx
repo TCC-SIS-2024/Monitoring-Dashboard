@@ -1,8 +1,8 @@
-import { Box, Separator, Flex, Grid, GridItem, Input } from "@chakra-ui/react";
-import { CardData } from "./CardData";
-import { Chart } from "./Chart";
-import { CurrentTemperature } from "../CurrentTemperature";
-import { QuantityAnomalies } from "../QuantityAnomalies";
+import {Box, Flex, Grid, GridItem, Input, Separator} from "@chakra-ui/react";
+import {CardData} from "./CardData";
+import {Chart} from "./Chart";
+import {CurrentTemperature} from "../CurrentTemperature";
+import {QuantityAnomalies} from "../QuantityAnomalies";
 
 export function MainChart() {
   return (

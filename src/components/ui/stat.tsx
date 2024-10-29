@@ -1,13 +1,7 @@
-import {
-  Badge,
-  type BadgeProps,
-  Stat as ChakraStat,
-  FormatNumber,
-  IconButton,
-} from "@chakra-ui/react"
-import { ToggleTip } from "./toggle-tip"
-import { forwardRef } from "react"
-import { HiOutlineInformationCircle } from "react-icons/hi"
+import {Badge, type BadgeProps, FormatNumber, IconButton, Stat as ChakraStat,} from "@chakra-ui/react"
+import {ToggleTip} from "./toggle-tip"
+import {forwardRef} from "react"
+import {HiOutlineInformationCircle} from "react-icons/hi"
 
 interface StatLabelProps extends ChakraStat.LabelProps {
   info?: React.ReactNode

@@ -1,9 +1,6 @@
-import type { SystemStyleObject } from "@chakra-ui/react"
-import {
-  AbsoluteCenter,
-  ProgressCircle as ChakraProgressCircle,
-} from "@chakra-ui/react"
-import { forwardRef } from "react"
+import type {SystemStyleObject} from "@chakra-ui/react"
+import {AbsoluteCenter, ProgressCircle as ChakraProgressCircle,} from "@chakra-ui/react"
+import {forwardRef} from "react"
 
 export const ProgressCircleRoot = ChakraProgressCircle.Root
 

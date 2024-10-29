@@ -1,7 +1,7 @@
 "use client"
 
-import { For, SegmentGroup } from "@chakra-ui/react"
-import { forwardRef, useMemo } from "react"
+import {For, SegmentGroup} from "@chakra-ui/react"
+import {forwardRef, useMemo} from "react"
 
 interface Item {
   value: string

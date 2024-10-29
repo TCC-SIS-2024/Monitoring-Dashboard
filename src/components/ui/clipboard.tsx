@@ -1,12 +1,7 @@
-import type { ButtonProps, InputProps } from "@chakra-ui/react"
-import {
-  Button,
-  Clipboard as ChakraClipboard,
-  IconButton,
-  Input,
-} from "@chakra-ui/react"
-import { forwardRef } from "react"
-import { LuCheck, LuClipboard, LuLink } from "react-icons/lu"
+import type {ButtonProps, InputProps} from "@chakra-ui/react"
+import {Button, Clipboard as ChakraClipboard, IconButton, Input,} from "@chakra-ui/react"
+import {forwardRef} from "react"
+import {LuCheck, LuClipboard, LuLink} from "react-icons/lu"
 
 const ClipboardIcon = forwardRef<
   HTMLDivElement,

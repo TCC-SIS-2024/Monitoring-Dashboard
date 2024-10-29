@@ -1,4 +1,4 @@
-import { z } from "zod"
+import {z} from "zod"
 
 export const signInForm = z.object({
   email: z.string().min(1, { message: "Insira um e-mail válido" }).email({ message: 'E-mail inválido' }),

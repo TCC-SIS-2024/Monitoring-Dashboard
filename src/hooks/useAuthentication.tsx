@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-import { SignInForm } from "../types/authentication";
+import {useContext} from "react";
+import {AuthContext} from "../contexts/AuthContext";
+import {SignInForm} from "../types/authentication";
 import {useMutation} from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {AxiosError, AxiosResponse} from "axios";
 import {toaster} from "../components/ui/toaster.tsx";
 

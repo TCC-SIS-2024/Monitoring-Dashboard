@@ -1,7 +1,6 @@
-import { Box, Separator, Flex, Text } from "@chakra-ui/react";
-import { Heading } from '@chakra-ui/react'
+import {Box, Flex, Heading, Separator, Text} from "@chakra-ui/react";
 import React from "react";
-import { Database, Pulse } from '@phosphor-icons/react'
+import {Database, Pulse} from '@phosphor-icons/react'
 
 interface CardDataProps {
   title: string

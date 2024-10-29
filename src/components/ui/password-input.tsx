@@ -1,23 +1,10 @@
 "use client"
 
-import type {
-  ButtonProps,
-  GroupProps,
-  InputProps,
-  StackProps,
-} from "@chakra-ui/react"
-import {
-  Box,
-  HStack,
-  IconButton,
-  Input,
-  Stack,
-  mergeRefs,
-  useControllableState,
-} from "@chakra-ui/react"
-import { forwardRef, useRef } from "react"
-import { LuEye, LuEyeOff } from "react-icons/lu"
-import { InputGroup } from "./input-group"
+import type {ButtonProps, GroupProps, InputProps, StackProps,} from "@chakra-ui/react"
+import {Box, HStack, IconButton, Input, mergeRefs, Stack, useControllableState,} from "@chakra-ui/react"
+import {forwardRef, useRef} from "react"
+import {LuEye, LuEyeOff} from "react-icons/lu"
+import {InputGroup} from "./input-group"
 
 export interface PasswordVisibilityProps {
   defaultVisible?: boolean

@@ -2,8 +2,11 @@ import {Box, Flex, Text} from "@chakra-ui/react"
 import {NoDataFound} from "../../../components/NoDataFound"
 import {SearchInput} from "../../../components/SearchInput"
 import {MainChart} from "../../../components/MainChart/MainChart"
+import {useMonitoring} from "../../../hooks/useMonitoring.tsx";
 
 export function Dahsboard() {
+
+  const { isMonitoring } = useMonitoring()
 
   return (
     <Box w='96%' margin='1% auto auto auto'>
@@ -13,8 +16,9 @@ export function Dahsboard() {
           <SearchInput/>
         </Flex>
       </Box>
-      <NoDataFound/>
-      {/*<MainChart />*/}
+      {
+        isMonitoring ? <MainChart/> : <NoDataFound/>
+      }
     </Box>
   )
 }

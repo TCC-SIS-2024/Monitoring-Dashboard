@@ -1,4 +1,4 @@
-import {Text, Flex, Skeleton} from "@chakra-ui/react";
+import {Flex, Skeleton, Text} from "@chakra-ui/react";
 import {CaretDown} from "@phosphor-icons/react";
 import {useQuery} from "@tanstack/react-query";
 import {useContext} from "react";

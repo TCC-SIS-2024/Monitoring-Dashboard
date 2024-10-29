@@ -1,7 +1,6 @@
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
-import { socketIoClient } from "../lib/socketio"
-import { SensorData } from "../interfaces/SensorData"
-import { useToast } from "@chakra-ui/react"
+import {createContext, ReactNode, useEffect, useState} from "react"
+import {socketIoClient} from "../lib/socketio"
+import {SensorData} from "../interfaces/SensorData"
 
 interface SocketContextType {
   isConnected: boolean
@@ -16,15 +15,15 @@ export const SocketContext = createContext({} as SocketContextType)
 
 export function SocketProvider({ children }: SocketProviderProps) {
 
-  const [isConnected, setIsConneceted] = useState<boolean>(socketIoClient.connected)
+  const [isConnected, setIsConnected] = useState<boolean>(socketIoClient.connected)
   const [sensorData, setSensorData] = useState<SensorData>()
 
   function onConnected() {
-    setIsConneceted(true)
+    setIsConnected(true)
   }
 
   function onDisconnected() {
-    setIsConneceted(false)
+    setIsConnected(false)
   }
 
   function onSensorData(value: SensorData) {
@@ -35,12 +34,12 @@ export function SocketProvider({ children }: SocketProviderProps) {
 
     socketIoClient.on('connect', onConnected)
     socketIoClient.on('disconnect', onDisconnected)
-    socketIoClient.on('sensorData', onSensorData)
+    socketIoClient.on('sensor_data', onSensorData)
 
     return () => {
       socketIoClient.off('connect', onConnected);
       socketIoClient.off('disconnect', onDisconnected);
-      socketIoClient.off('sensorData', onSensorData);
+      socketIoClient.off('sensor_data', onSensorData);
     };
 
   }, [])

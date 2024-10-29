@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import {Box, Flex, Image, Text} from "@chakra-ui/react";
 import noDataLogo from '../assets/no_data_logo.svg'
 
 export function NoDataFound() {

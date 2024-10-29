@@ -1,5 +1,5 @@
-import { Box, Flex } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import {Box, Flex} from "@chakra-ui/react";
+import {Outlet} from "react-router-dom";
 
 export function AuthLayout() {
   return (

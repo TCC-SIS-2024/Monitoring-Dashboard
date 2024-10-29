@@ -9,6 +9,7 @@ import {SocketProvider} from "./contexts/SocketContext"
 import {themeSystem} from "./styles/default.ts";
 import {Toaster} from "./components/ui/toaster.tsx";
 import {ChakraProvider} from "@chakra-ui/react";
+import {MonitoringProvider} from "./contexts/MonitoringContext.tsx";
 
 export function App() {
 
@@ -17,9 +18,11 @@ export function App() {
         <Toaster/>
         <AuthProvider>
           <SocketProvider>
-            <QueryClientProvider client={queryClient}>
-              <RouterProvider router={router}/>
-            </QueryClientProvider>
+            <MonitoringProvider>
+              <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router}/>
+              </QueryClientProvider>
+            </MonitoringProvider>
           </SocketProvider>
         </AuthProvider>
     </ChakraProvider>

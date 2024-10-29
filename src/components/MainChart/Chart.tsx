@@ -1,7 +1,7 @@
 import ReactECharts from 'echarts-for-react';
-import { useEffect, useRef, useState } from 'react';
-import { useSocket } from '../../hooks/useSocket';
-import { SensorData } from '../../interfaces/SensorData';
+import {useEffect, useState} from 'react';
+import {useSocket} from '../../hooks/useSocket';
+import {SensorData} from '../../interfaces/SensorData';
 
 export function Chart() {
   const { sensorData } = useSocket()

@@ -1,9 +1,4 @@
-import {
-  Box, Flex,
-  Heading, HStack, Separator,
-  Stack,
-  Table,
-} from "@chakra-ui/react";
+import {Box, Flex, Heading, HStack, Separator, Stack, Table,} from "@chakra-ui/react";
 import {
   PaginationItems,
   PaginationNextTrigger,

@@ -1,6 +1,6 @@
-import { Box, Separator, Flex, Heading, Text } from "@chakra-ui/react";
-import { ChartLineUp, DropSimple } from "@phosphor-icons/react";
-import { useSocket } from "../hooks/useSocket";
+import {Box, Flex, Heading, Separator, Text} from "@chakra-ui/react";
+import {ChartLineUp, DropSimple} from "@phosphor-icons/react";
+import {useSocket} from "../hooks/useSocket";
 
 export function CurrentTemperature() {
 

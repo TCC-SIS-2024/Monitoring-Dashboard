@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {z} from "zod";
-import {Box, Fieldset, Flex, Heading, HStack, Image, Input, Separator, Stack, Table} from "@chakra-ui/react";
+import {Badge, Box, Fieldset, Flex, Heading, HStack, Image, Input, Separator, Stack, Table} from "@chakra-ui/react";
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -18,20 +18,23 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
   DrawerBackdrop,
-  DrawerRoot,
+  DrawerBody,
+  DrawerCloseTrigger,
   DrawerContent,
-  DrawerCloseTrigger, DrawerBody, DrawerHeader
+  DrawerHeader,
+  DrawerRoot
 } from "../../../components/ui/drawer.tsx";
 import logoImg from "../../../assets/logo.svg";
 import {Field} from "../../../components/ui/field.tsx";
 import {toaster} from "../../../components/ui/toaster.tsx";
 import {
   aasFilterSchema,
-  AASFiltersSchema, createAssetAdministrationShellForm,
+  AASFiltersSchema,
+  createAssetAdministrationShellForm,
   CreateAssetAdministrationShellForm
 } from "../../../types/asset-administration-shell.ts";
-import { parseISO, addHours, format } from 'date-fns';
-import { ptBR } from 'date-fns/locale'
+import {format, parseISO} from 'date-fns';
+import {useMonitoring} from "../../../hooks/useMonitoring.tsx";
 
 
 export function AssetAdministrationShells() {
@@ -39,6 +42,7 @@ export function AssetAdministrationShells() {
   const [editingAAS, setEditingAAS] = React.useState<boolean | null>(false)
   const [creatingAAS, setCreatingAAS] = React.useState<boolean | null>(false)
   const aasService = new AssetAdministrationShellService()
+  const { startMonitoringData } = useMonitoring()
   const search = searchParams.get('search')
   const aasId = searchParams.get('aas_id')
   const navigate = useNavigate()
@@ -270,6 +274,7 @@ export function AssetAdministrationShells() {
               <Table.ColumnHeader>host</Table.ColumnHeader>
               <Table.ColumnHeader>porta</Table.ColumnHeader>
               <Table.ColumnHeader>Data de criação</Table.ColumnHeader>
+              <Table.ColumnHeader>Status</Table.ColumnHeader>
               <Table.ColumnHeader textAlign='center'>Ações</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
@@ -284,9 +289,12 @@ export function AssetAdministrationShells() {
                 <Table.Cell>{item.port}</Table.Cell>
                 <Table.Cell>{format(parseISO(item.created_at), 'dd/MM/yyyy HH:mm')}</Table.Cell>
                 <Table.Cell>
+                  <Badge size='lg' colorPalette={item.active ? 'green' : 'red'}>{item.active ? 'Online' : 'Offline'}</Badge>
+                </Table.Cell>
+                <Table.Cell>
                   <Flex alignItems='center' justifyContent='space-around'>
                     <Tooltip openDelay={100} closeDelay={100} showArrow content='Monitorar'>
-                      <Button as='button' bg='blue.500' color='white' onClick={() => null}>
+                      <Button as='button' bg='blue.500' color='white' onClick={() => startMonitoringData()}>
                         <ArrowFatLinesRight size={32}/>
                       </Button>
                     </Tooltip>

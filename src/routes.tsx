@@ -1,8 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
-import { AppLayout } from "./pages/_layout/app";
-import { AuthLayout } from "./pages/_layout/auth";
-import { SignIn } from "./pages/auth/sign-in";
-import { Dahsboard } from "./pages/app/dashboard/dashboard";
+import {createBrowserRouter} from "react-router-dom";
+import {AppLayout} from "./pages/_layout/app";
+import {AuthLayout} from "./pages/_layout/auth";
+import {SignIn} from "./pages/auth/sign-in";
+import {Dahsboard} from "./pages/app/dashboard/dashboard";
 import {Users} from "./pages/app/users/users.tsx";
 import {AssetAdministrationShells} from "./pages/app/aas/aas.tsx";
 

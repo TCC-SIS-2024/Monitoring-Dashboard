@@ -1,5 +1,5 @@
-import { Slider as ChakraSlider } from "@chakra-ui/react"
-import { forwardRef } from "react"
+import {Slider as ChakraSlider} from "@chakra-ui/react"
+import {forwardRef} from "react"
 
 export interface SliderProps extends ChakraSlider.RootProps {
   marks?: Array<number | { value: number; label: React.ReactNode }>

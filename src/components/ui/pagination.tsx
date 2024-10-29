@@ -1,21 +1,17 @@
 "use client"
 
-import type { ButtonProps, TextProps } from "@chakra-ui/react"
+import type {ButtonProps, TextProps} from "@chakra-ui/react"
 import {
   Button,
-  Pagination as ChakraPagination,
-  IconButton,
-  Text,
   createContext,
+  IconButton,
+  Pagination as ChakraPagination,
+  Text,
   usePaginationContext,
 } from "@chakra-ui/react"
-import { forwardRef, useMemo } from "react"
-import {
-  HiChevronLeft,
-  HiChevronRight,
-  HiMiniEllipsisHorizontal,
-} from "react-icons/hi2"
-import { LinkButton } from "./link-button"
+import {forwardRef, useMemo} from "react"
+import {HiChevronLeft, HiChevronRight, HiMiniEllipsisHorizontal,} from "react-icons/hi2"
+import {LinkButton} from "./link-button"
 
 interface ButtonVariantMap {
   current: ButtonProps["variant"]

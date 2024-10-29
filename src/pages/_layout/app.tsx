@@ -1,15 +1,16 @@
-import { Outlet } from "react-router-dom";
-import { Header } from "../../components/Header/Header";
-import { Flex } from "@chakra-ui/react";
-import { useSocket } from "../../hooks/useSocket";
-import { useEffect } from "react";
+import {Outlet} from "react-router-dom";
+import {Header} from "../../components/Header/Header";
+import {Flex} from "@chakra-ui/react";
+import {useSocket} from "../../hooks/useSocket";
+import {useEffect} from "react";
 import {toaster} from "../../components/ui/toaster.tsx";
 
 export function AppLayout() {
 
-  const { isConnected } = useSocket()
+  const { isConnected, sensorData } = useSocket()
 
   useEffect(() => {
+    console.log(sensorData)
     if (isConnected) {
       toaster.create({
         description: "Conectado ao socket",

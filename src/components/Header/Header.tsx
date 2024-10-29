@@ -12,7 +12,7 @@ import {UserInfo} from "./UserInfo"
 import {AddressBook, Binary, List, LockSimpleOpen, Users} from '@phosphor-icons/react'
 import logoImg from '../../assets/logo.svg'
 import {useNavigate} from "react-router-dom";
-import {Box, Flex, StackSeparator, VStack, Image} from "@chakra-ui/react";
+import {Box, Flex, Image, StackSeparator, VStack} from "@chakra-ui/react";
 import {Button} from "../ui/button.tsx";
 
 export function Header() {

@@ -1,9 +1,6 @@
-import type {
-  SkeletonProps as ChakraSkeletonProps,
-  CircleProps,
-} from "@chakra-ui/react"
-import { Skeleton as ChakraSkeleton, Circle, Stack } from "@chakra-ui/react"
-import { forwardRef } from "react"
+import type {CircleProps, SkeletonProps as ChakraSkeletonProps,} from "@chakra-ui/react"
+import {Circle, Skeleton as ChakraSkeleton, Stack} from "@chakra-ui/react"
+import {forwardRef} from "react"
 
 export interface SkeletonCircleProps extends ChakraSkeletonProps {
   size?: CircleProps["size"]

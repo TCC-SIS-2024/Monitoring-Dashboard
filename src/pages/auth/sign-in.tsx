@@ -1,10 +1,9 @@
-import { Card, Text, Image, Flex, Button, Box, Fieldset } from '@chakra-ui/react'
+import {Button, Card, Fieldset, Flex, Image, Input, Text} from '@chakra-ui/react'
 import logoImg from '../../assets/logo.svg'
-import { Input } from '@chakra-ui/react'
-import { useForm } from 'react-hook-form'
-import { signInForm, SignInForm } from '../../types/authentication'
-import { useAuthentication } from '../../hooks/useAuthentication'
-import { zodResolver } from '@hookform/resolvers/zod'
+import {useForm} from 'react-hook-form'
+import {signInForm, SignInForm} from '../../types/authentication'
+import {useAuthentication} from '../../hooks/useAuthentication'
+import {zodResolver} from '@hookform/resolvers/zod'
 import {toaster} from "../../components/ui/toaster.tsx";
 import {Field} from "../../components/ui/field.tsx";
 

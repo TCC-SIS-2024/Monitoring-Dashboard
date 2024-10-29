@@ -1,5 +1,5 @@
-import { RadioCard } from "@chakra-ui/react"
-import { Fragment, forwardRef } from "react"
+import {RadioCard} from "@chakra-ui/react"
+import {forwardRef, Fragment} from "react"
 
 interface RadioCardItemProps extends RadioCard.ItemProps {
   icon?: React.ReactElement

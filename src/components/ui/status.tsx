@@ -1,6 +1,6 @@
-import type { ColorPalette } from "@chakra-ui/react"
-import { Status as ChakraStatus } from "@chakra-ui/react"
-import { forwardRef } from "react"
+import type {ColorPalette} from "@chakra-ui/react"
+import {Status as ChakraStatus} from "@chakra-ui/react"
+import {forwardRef} from "react"
 
 type StatusValue = "success" | "error" | "warning" | "info"
 

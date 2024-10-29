@@ -1,13 +1,6 @@
-import { Box, Button, Flex } from "@chakra-ui/react"
-import { MagnifyingGlass } from "@phosphor-icons/react"
-import {
-  SelectContent,
-  SelectItem,
-  SelectRoot,
-  SelectTrigger,
-  SelectValueText,
-} from "./ui/select.tsx"
-import { createListCollection } from "@chakra-ui/react"
+import {Box, Button, createListCollection, Flex} from "@chakra-ui/react"
+import {MagnifyingGlass} from "@phosphor-icons/react"
+import {SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText,} from "./ui/select.tsx"
 
 export function SearchInput() {
 

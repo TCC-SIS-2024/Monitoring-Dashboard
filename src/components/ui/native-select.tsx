@@ -1,7 +1,7 @@
 "use client"
 
-import { NativeSelect as Select } from "@chakra-ui/react"
-import { forwardRef, useMemo } from "react"
+import {NativeSelect as Select} from "@chakra-ui/react"
+import {forwardRef, useMemo} from "react"
 
 interface NativeSelectRootProps extends Select.RootProps {
   icon?: React.ReactNode

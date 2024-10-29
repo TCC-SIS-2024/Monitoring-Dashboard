@@ -1,6 +1,6 @@
-import { Accordion, HStack } from "@chakra-ui/react"
-import { forwardRef } from "react"
-import { LuChevronDown } from "react-icons/lu"
+import {Accordion, HStack} from "@chakra-ui/react"
+import {forwardRef} from "react"
+import {LuChevronDown} from "react-icons/lu"
 
 interface AccordionItemTriggerProps extends Accordion.ItemTriggerProps {
   indicatorPlacement?: "start" | "end"
