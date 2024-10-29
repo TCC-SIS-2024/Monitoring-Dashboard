@@ -57,10 +57,7 @@ export function AssetAdministrationShells() {
     reset,
     formState: {isSubmitting: isCreationAasSubmitting, errors}
   } = useForm<CreateAssetAdministrationShellForm>({
-    resolver: zodResolver(createAssetAdministrationShellForm),
-    defaultValues: {
-      idShort: '',
-    }
+    resolver: zodResolver(createAssetAdministrationShellForm)
   })
 
   const page = z.coerce
@@ -89,6 +86,18 @@ export function AssetAdministrationShells() {
       refetchAAS()
       toaster.create({
         description: "Asset Administration Shell created successfully.",
+        type: 'success',
+        duration: 3000,
+      });
+    }
+  })
+
+  const { mutateAsync: updateAAS } = useMutation({
+    mutationFn: ({id, data}) => aasService.updateById(id, data),
+    onSuccess: () => {
+      refetchAAS()
+      toaster.create({
+        description: "Asset Administration Shell updated successfully.",
         type: 'success',
         duration: 3000,
       });
@@ -199,7 +208,9 @@ export function AssetAdministrationShells() {
                     }} onClick={() => navigate('/')} src={logoImg} w='90px' m='0 auto'/>
                   </DrawerHeader>
                   <DrawerBody p='0 12px'>
-                    <form onSubmit={handleAasSubmit(createAAS)}>
+                    <form onSubmit={handleAasSubmit((data) => {
+                      editingAAS ? updateAAS({id: aasId!, data}) : createAAS(data)
+                    })}>
                       <Fieldset.Root size="lg" invalid>
                         <Fieldset.Legend>{`Asset Administration Shell ${editingAAS ? 'edition' : 'creation'}`}</Fieldset.Legend>
                         <Fieldset.Content>

@@ -1,7 +1,10 @@
 import {Service} from "../interfaces/Service.ts";
 import {api} from "../lib/axios.ts";
 import {PaginationSearchParams} from "../interfaces/Pagination.ts";
-import {CreateAssetAdministrationShellForm} from "../types/asset-administration-shell.ts";
+import {
+  CreateAssetAdministrationShellForm,
+  UpdateAssetAdministrationShellForm
+} from "../types/asset-administration-shell.ts";
 
 export class AssetAdministrationShellService implements Service {
 
@@ -51,6 +54,23 @@ export class AssetAdministrationShellService implements Service {
   async findById(id: string): Promise<any> {
     try {
       const response = await api.get(`asset-administration-shells/${id}`)
+      return response.data
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async updateById(id: string, payload: UpdateAssetAdministrationShellForm): Promise<any> {
+    try {
+      const response = await api.put(`asset-administration-shells/${id}`, {
+        id_short: payload.idShort,
+        database_endpoint: payload.databaseEndpoint,
+        aas_modeling: payload.aasModeling,
+        host: payload.host,
+        port: payload.port,
+        active: false
+      })
+
       return response.data
     } catch (error) {
       console.error(error)

@@ -15,3 +15,4 @@ export const aasFilterSchema = z.object({
 
 export type AASFiltersSchema = z.infer<typeof aasFilterSchema>
 export type CreateAssetAdministrationShellForm = z.infer<typeof createAssetAdministrationShellForm>
+export type UpdateAssetAdministrationShellForm = z.infer<typeof createAssetAdministrationShellForm>
