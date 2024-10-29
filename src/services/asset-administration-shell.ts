@@ -47,4 +47,13 @@ export class AssetAdministrationShellService implements Service {
       console.error(error)
     }
   }
+
+  async findById(id: string): Promise<any> {
+    try {
+      const response = await api.get(`asset-administration-shells/${id}`)
+      return response.data
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }

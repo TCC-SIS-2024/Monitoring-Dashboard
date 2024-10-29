@@ -18,7 +18,6 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
   DrawerBackdrop,
-  DrawerTrigger,
   DrawerRoot,
   DrawerContent,
   DrawerCloseTrigger, DrawerBody, DrawerHeader
@@ -39,6 +38,7 @@ export function AssetAdministrationShells() {
   const [creatingAAS, setCreatingAAS] = React.useState<boolean | null>(false)
   const aasService = new AssetAdministrationShellService()
   const search = searchParams.get('search')
+  const aasId = searchParams.get('aas_id')
   const navigate = useNavigate()
 
   const {
@@ -76,6 +76,11 @@ export function AssetAdministrationShells() {
   const {data: result, isLoading: isLoadingAAS, refetch: refetchAAS} = useQuery({
     queryKey: ['asset-administration-shells', page, pageSize, search],
     queryFn: () => aasService.findAll({page, pageSize, search}),
+  })
+
+  const {data: resultSpecificAAS, refetch: refetchSpecificAAS} = useQuery({
+    queryKey: ['asset-administration-shells'],
+    queryFn: () => aasService.findById(aasId),
   })
 
   const { mutateAsync: createAAS } = useMutation({
@@ -130,13 +135,39 @@ export function AssetAdministrationShells() {
     })
   }
 
+  function handleAASId(aasId: string) {
+    setSearchParams((state) => {
+      state.set('aas_id', aasId)
+      return state
+    })
+  }
+
   useEffect(() => {
     if (editingAAS) {
+      refetchSpecificAAS()
+    }
+  }, [editingAAS, refetchSpecificAAS]);
+
+  useEffect(() => {
+    if (editingAAS && resultSpecificAAS) {
       reset({
-        idShort: 'abobrinha',
+        idShort: resultSpecificAAS.payload.id_short,
+        databaseEndpoint: resultSpecificAAS.payload.database_endpoint,
+        host: resultSpecificAAS.payload.host,
+        port: resultSpecificAAS.payload.port,
+        aasModeling: resultSpecificAAS.payload.aas_modeling,
+      });
+    }
+    else if (creatingAAS) {
+      reset({
+        idShort: '',
+        databaseEndpoint: '',
+        host: '',
+        port: undefined,
+        aasModeling: '',
       })
     }
-  }, [editingAAS, reset]);
+  }, [editingAAS, creatingAAS, resultSpecificAAS, reset]);
 
   return (
     <Box w='96%' margin='1% auto auto auto'>
@@ -248,7 +279,10 @@ export function AssetAdministrationShells() {
                     </Tooltip>
                     <Separator orientation="vertical" height="6" size="md"/>
                     <Tooltip openDelay={100} closeDelay={100} showArrow content='Editar'>
-                      <Button as='button' bg='greenPigment.100' color='white' onClick={() => setEditingAAS(true)}>
+                      <Button as='button' bg='greenPigment.100' color='white' onClick={() => {
+                        setEditingAAS(true)
+                        handleAASId(item.id)
+                      }}>
                         <Pencil size={32}/>
                       </Button>
                     </Tooltip>
