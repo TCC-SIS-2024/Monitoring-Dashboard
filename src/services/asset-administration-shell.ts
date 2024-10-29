@@ -22,6 +22,15 @@ export class AssetAdministrationShellService implements Service {
     }
   }
 
+  async deleteById(id: string): Promise<any> {
+    try {
+      const response = await api.delete(`asset-administration-shells/${id}`)
+      return response.data
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async create(payload: CreateAssetAdministrationShellForm): Promise<any> {
     try {
       const response = await api.post('asset-administration-shells/', {

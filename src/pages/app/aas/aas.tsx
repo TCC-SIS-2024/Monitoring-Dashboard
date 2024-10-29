@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {z} from "zod";
 import {Box, Fieldset, Flex, Heading, HStack, Image, Input, Separator, Stack, Table} from "@chakra-ui/react";
@@ -35,6 +35,8 @@ import {
 
 export function AssetAdministrationShells() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [editingAAS, setEditingAAS] = React.useState<boolean | null>(false)
+  const [creatingAAS, setCreatingAAS] = React.useState<boolean | null>(false)
   const aasService = new AssetAdministrationShellService()
   const search = searchParams.get('search')
   const navigate = useNavigate()
@@ -52,9 +54,13 @@ export function AssetAdministrationShells() {
   const {
     register: registerAasField,
     handleSubmit: handleAasSubmit,
+    reset,
     formState: {isSubmitting: isCreationAasSubmitting, errors}
   } = useForm<CreateAssetAdministrationShellForm>({
-    resolver: zodResolver(createAssetAdministrationShellForm)
+    resolver: zodResolver(createAssetAdministrationShellForm),
+    defaultValues: {
+      idShort: '',
+    }
   })
 
   const page = z.coerce
@@ -78,6 +84,18 @@ export function AssetAdministrationShells() {
       refetchAAS()
       toaster.create({
         description: "Asset Administration Shell created successfully.",
+        type: 'success',
+        duration: 3000,
+      });
+    }
+  })
+
+  const { mutateAsync: deleteAAS } = useMutation({
+    mutationFn: aasService.deleteById,
+    onSuccess: () => {
+      refetchAAS()
+      toaster.create({
+        description: "Asset Administration Shell deleted successfully.",
         type: 'success',
         duration: 3000,
       });
@@ -112,6 +130,14 @@ export function AssetAdministrationShells() {
     })
   }
 
+  useEffect(() => {
+    if (editingAAS) {
+      reset({
+        idShort: 'abobrinha',
+      })
+    }
+  }, [editingAAS, reset]);
+
   return (
     <Box w='96%' margin='1% auto auto auto'>
       <Stack width="full" gap="5">
@@ -125,15 +151,16 @@ export function AssetAdministrationShells() {
                   <MagnifyingGlass size={32} weight="bold"/>
                 </Button>
               </Tooltip>
-              <DrawerRoot placement='end' size='sm'>
+              <DrawerRoot onInteractOutside={() => {
+                setEditingAAS(false)
+                setCreatingAAS(false)
+              }} open={editingAAS || creatingAAS} placement='end' size='sm'>
                 <DrawerBackdrop/>
-                <DrawerTrigger>
-                  <Tooltip openDelay={100} closeDelay={100} showArrow content='Adicionar Asset Administration Shell'>
-                    <Button as='button' bg='greenPigment.100' color='white'>
-                      <Plus size={32} weight="bold"/>
-                    </Button>
-                  </Tooltip>
-                </DrawerTrigger>
+                <Tooltip openDelay={100} closeDelay={100} showArrow content='Adicionar Asset Administration Shell'>
+                  <Button onClick={() => setCreatingAAS(true)} as='button' bg='greenPigment.100' color='white'>
+                    <Plus size={32} weight="bold"/>
+                  </Button>
+                </Tooltip>
                 <DrawerContent>
                   <DrawerHeader p='32px 12px'>
                     <Image _hover={{
@@ -143,7 +170,7 @@ export function AssetAdministrationShells() {
                   <DrawerBody p='0 12px'>
                     <form onSubmit={handleAasSubmit(createAAS)}>
                       <Fieldset.Root size="lg" invalid>
-                        <Fieldset.Legend>Asset Administration Shell creation</Fieldset.Legend>
+                        <Fieldset.Legend>{`Asset Administration Shell ${editingAAS ? 'edition' : 'creation'}`}</Fieldset.Legend>
                         <Fieldset.Content>
                           <Field label="IdShort">
                             <Input placeholder="IdShort" {...registerAasField('idShort')} />
@@ -160,11 +187,6 @@ export function AssetAdministrationShells() {
                           <Field label="Moldeagem JSON">
                             <Input placeholder="Modelagem" {...registerAasField('aasModeling')} />
                           </Field>
-                          {
-                            !errors ? (<Fieldset.HelperText></Fieldset.HelperText>) : (
-                              <Fieldset.ErrorText>{errors.port?.message}</Fieldset.ErrorText>
-                            )
-                          }
                           <Button
                             // onClick={() => {
                             //   hasErrors && toaster.create({
@@ -182,7 +204,7 @@ export function AssetAdministrationShells() {
                             _hover={{
                             bg: "mediumSeaGreen.100"
                           }}>
-                            Adicionar Novo
+                            {editingAAS ? 'Editar' : 'Adicionar'}
                           </Button>
                         </Fieldset.Content>
                       </Fieldset.Root>
@@ -226,13 +248,15 @@ export function AssetAdministrationShells() {
                     </Tooltip>
                     <Separator orientation="vertical" height="6" size="md"/>
                     <Tooltip openDelay={100} closeDelay={100} showArrow content='Editar'>
-                      <Button as='button' bg='greenPigment.100' color='white' onClick={() => null}>
+                      <Button as='button' bg='greenPigment.100' color='white' onClick={() => setEditingAAS(true)}>
                         <Pencil size={32}/>
                       </Button>
                     </Tooltip>
                     <Separator orientation="vertical" height="6" size="md"/>
                     <Tooltip openDelay={100} closeDelay={100} showArrow content='Deletar'>
-                      <Button as='button' bg='red.500' color='white' onClick={() => null}>
+                      <Button as='button' bg='red.500' color='white' onClick={() => {
+                        return deleteAAS(item.id)
+                      }}>
                         <Trash size={32}/>
                       </Button>
                     </Tooltip>

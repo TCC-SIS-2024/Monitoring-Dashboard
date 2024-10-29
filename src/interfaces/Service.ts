@@ -4,4 +4,5 @@ export interface Service {
 
   findAll(params: PaginationSearchParams): Promise<any>
   create(payload: any): Promise<any>
+  deleteById(id: any): Promise<any>
 }
