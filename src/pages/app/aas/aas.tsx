@@ -30,6 +30,8 @@ import {
   AASFiltersSchema, createAssetAdministrationShellForm,
   CreateAssetAdministrationShellForm
 } from "../../../types/asset-administration-shell.ts";
+import { parseISO, addHours, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale'
 
 
 export function AssetAdministrationShells() {
@@ -280,7 +282,7 @@ export function AssetAdministrationShells() {
                 <Table.Cell>{item.aas_modeling}</Table.Cell>
                 <Table.Cell>{item.host}</Table.Cell>
                 <Table.Cell>{item.port}</Table.Cell>
-                <Table.Cell>{item.created_at}</Table.Cell>
+                <Table.Cell>{format(parseISO(item.created_at), 'dd/MM/yyyy HH:mm')}</Table.Cell>
                 <Table.Cell>
                   <Flex alignItems='center' justifyContent='space-around'>
                     <Tooltip openDelay={100} closeDelay={100} showArrow content='Monitorar'>
@@ -326,7 +328,6 @@ export function AssetAdministrationShells() {
               <PaginationItems/>
               <PaginationNextTrigger/>
             </HStack>
-            <Box>sighusdigu</Box>
           </Flex>
         </PaginationRoot>
       </Stack>
