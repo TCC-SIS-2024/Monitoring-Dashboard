@@ -38,11 +38,6 @@ export function SearchInput() {
           </SelectRoot>
           {/* <Input bg='white' focusBorderColor="greenPigment.100" placeholder="Selecione o Digital Twin" width='60%' /> */}
           <Button bg='white' variant='outline' colorScheme="teal" size='md'>Cancelar</Button>
-          <Button bg='greenPigment.100' color='white' size='md' sx={{
-            "&:hover": {
-              bg: "mediumSeaGreen.100"
-            }
-          }}> <MagnifyingGlass /> Pesquisar</Button>
         </Flex>
       </form>
     </Box>

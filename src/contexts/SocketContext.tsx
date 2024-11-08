@@ -1,6 +1,7 @@
 import {createContext, ReactNode, useEffect, useState} from "react"
 import {socketIoClient} from "../lib/socketio"
 import {SensorData} from "../interfaces/SensorData"
+import {useMonitoring} from "../hooks/useMonitoring.tsx";
 
 interface SocketContextType {
   isConnected: boolean
@@ -17,6 +18,7 @@ export function SocketProvider({ children }: SocketProviderProps) {
 
   const [isConnected, setIsConnected] = useState<boolean>(socketIoClient.connected)
   const [sensorData, setSensorData] = useState<SensorData>()
+  const {isRealTime} = useMonitoring()
 
   function onConnected() {
     setIsConnected(true)
@@ -31,18 +33,18 @@ export function SocketProvider({ children }: SocketProviderProps) {
   }
 
   useEffect(() => {
+    if (isRealTime) {
+      console.info("Connecting to socket...");
+      socketIoClient.connect();
+      socketIoClient.on('connect', onConnected)
+      socketIoClient.on('disconnect', onDisconnected)
+      socketIoClient.on('sensor_data', onSensorData)
+    } else {
+      console.info("Disconnecting from socket...");
+      socketIoClient.disconnect();
+    }
 
-    socketIoClient.on('connect', onConnected)
-    socketIoClient.on('disconnect', onDisconnected)
-    socketIoClient.on('sensor_data', onSensorData)
-
-    return () => {
-      socketIoClient.off('connect', onConnected);
-      socketIoClient.off('disconnect', onDisconnected);
-      socketIoClient.off('sensor_data', onSensorData);
-    };
-
-  }, [])
+  }, [isRealTime])
 
   return (
     <SocketContext.Provider value={{ isConnected, sensorData }}>

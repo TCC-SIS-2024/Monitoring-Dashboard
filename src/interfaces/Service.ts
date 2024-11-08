@@ -8,3 +8,7 @@ export interface Service {
   deleteById(id: any): Promise<any>
   updateById(id: any, body: any): Promise<any>
 }
+
+export interface HistoricalDataService {
+  getHistorizedData(params: any): Promise<any>
+}

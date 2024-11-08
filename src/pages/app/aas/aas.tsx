@@ -294,7 +294,15 @@ export function AssetAdministrationShells() {
                 <Table.Cell>
                   <Flex alignItems='center' justifyContent='space-around'>
                     <Tooltip openDelay={100} closeDelay={100} showArrow content='Monitorar'>
-                      <Button as='button' bg='blue.500' color='white' onClick={() => startMonitoringData()}>
+                      <Button as='button' bg='blue.500' color='white' onClick={() => {
+                        const opcuaParams = { opcuaServerHost: item.host, opcuaServerPort: item.port };
+                        startMonitoringData()
+                        navigate('/', {
+                          state: {
+                            opcuaParams
+                          }
+                        })
+                      }}>
                         <ArrowFatLinesRight size={32}/>
                       </Button>
                     </Tooltip>

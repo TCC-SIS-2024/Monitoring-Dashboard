@@ -17,13 +17,13 @@ export function App() {
     <ChakraProvider value={themeSystem}>
         <Toaster/>
         <AuthProvider>
-          <SocketProvider>
-            <MonitoringProvider>
-              <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router}/>
-              </QueryClientProvider>
-            </MonitoringProvider>
-          </SocketProvider>
+          <MonitoringProvider>
+            <SocketProvider>
+                <QueryClientProvider client={queryClient}>
+                  <RouterProvider router={router}/>
+                </QueryClientProvider>
+            </SocketProvider>
+          </MonitoringProvider>
         </AuthProvider>
     </ChakraProvider>
   )

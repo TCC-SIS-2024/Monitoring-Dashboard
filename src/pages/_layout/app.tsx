@@ -7,10 +7,9 @@ import {toaster} from "../../components/ui/toaster.tsx";
 
 export function AppLayout() {
 
-  const { isConnected, sensorData } = useSocket()
+  const { isConnected } = useSocket()
 
   useEffect(() => {
-    console.log(sensorData)
     if (isConnected) {
       toaster.create({
         description: "Conectado ao socket",

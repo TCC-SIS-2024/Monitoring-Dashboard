@@ -1,6 +1,6 @@
 export interface SensorData {
-  temperature: number
-  averageTemperature: number
-  humidity: number
+  temperature: number | null
+  averageTemperature: number | null
+  humidity: number | null
   now: string
 }
