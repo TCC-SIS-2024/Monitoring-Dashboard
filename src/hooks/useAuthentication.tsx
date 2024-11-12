@@ -9,7 +9,7 @@ import {toaster} from "../components/ui/toaster.tsx";
 export function useAuthentication() {
 
   const navigate = useNavigate()
-  const { authenticate, signOut } = useContext(AuthContext)
+  const { authenticate, signOut, getCurrentUser } = useContext(AuthContext)
 
   const { mutateAsync: signIn } = useMutation({
     mutationFn: authenticate
@@ -69,8 +69,27 @@ export function useAuthentication() {
     }
   }
 
+  async function getCurrentInfoUser() {
+    try {
+      return await getCurrentUser()
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.status)
+        // if (status === 401) {
+        //   toaster.create({
+        //     description: "Sessão expirada, faça login novamente (RefreshToken Not Implemented)",
+        //     type: 'error',
+        //     duration: 3000
+        //   })
+        //   navigate('/sign-in')
+        // }
+      }
+    }
+  }
+
 
   return {
+    getCurrentInfoUser,
     handleSignIn,
     handleLogOut
   }

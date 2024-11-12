@@ -1,8 +1,6 @@
 import {Flex, Skeleton, Text} from "@chakra-ui/react";
 import {CaretDown} from "@phosphor-icons/react";
 import {useQuery} from "@tanstack/react-query";
-import {useContext} from "react";
-import {AuthContext} from "../../contexts/AuthContext.tsx";
 import {useAuthentication} from "../../hooks/useAuthentication.tsx";
 import {MenuContent, MenuItem, MenuRoot, MenuTrigger} from "../ui/menu.tsx";
 import {Button} from "../ui/button.tsx";
@@ -10,15 +8,13 @@ import {Avatar} from "../ui/avatar.tsx";
 
 export function UserInfo() {
 
-  const {getCurrentUser} = useContext(AuthContext)
+  const {handleLogOut, getCurrentInfoUser} = useAuthentication()
 
   const {data: currentUser, isLoading: isLoadingCurrentUser} = useQuery({
     queryKey: ['currentUser'],
-    queryFn: getCurrentUser,
+    queryFn: getCurrentInfoUser,
     staleTime: Infinity
   })
-
-  const {handleLogOut} = useAuthentication()
 
   return (
       <MenuRoot>

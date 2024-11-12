@@ -5,7 +5,7 @@ export const api = axios.create({
   withCredentials: true
 })
 
-api.interceptors.request.use(async (config) => {
+api.interceptors.request.use((config) => {
   const userInformation = localStorage.getItem('userInformation')
 
   if (userInformation) {
@@ -15,13 +15,16 @@ api.interceptors.request.use(async (config) => {
   }
 
   return config
-})
+},
+  error => {
+    return Promise.reject(error)
+  })
 
-// api.interceptors.request.use(async (config) => {
-//   await new Promise((resolve) =>
-//     setTimeout(resolve, Math.round(Math.random() * 3000)),
-//   )
-//
-//   return config
-// })
+api.interceptors.request.use(async (config) => {
+  await new Promise((resolve) =>
+    setTimeout(resolve, Math.round(Math.random() * 3000)),
+  )
+
+  return config
+})
 

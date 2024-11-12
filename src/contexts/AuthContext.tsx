@@ -1,7 +1,6 @@
 import {createContext, ReactNode, useCallback} from "react"
 import {api} from "../lib/axios.ts";
 import {CurrentUser} from "../interfaces/CurrentUser.ts";
-import {AxiosError, AxiosResponse} from "axios";
 
 interface Authentication {
   email: string
@@ -43,31 +42,17 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   }, [])
 
   const getCurrentUser = useCallback(async () => {
-      try {
-        const response = await api.get('users/me/')
+      const response = await api.get('users/me/')
 
-        const payload = response.data.payload
+      const payload = response.data.payload
 
-        return {
-          id: payload.id,
-          email: payload.email,
-          username: payload.username,
-          createdAt: payload.created_at,
-          updatedAt: payload.updated_at
-        } as CurrentUser
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response !== undefined) {
-            const response:  AxiosResponse = error.response
-            const status: number = response.status
-
-            if (status === 401) {
-              return null
-            }
-
-          }
-        }
-      }
+      return {
+        id: payload.id,
+        email: payload.email,
+        username: payload.username,
+        createdAt: payload.created_at,
+        updatedAt: payload.updated_at
+      } as CurrentUser
   }, [])
 
   const signOut = useCallback(async () => {
