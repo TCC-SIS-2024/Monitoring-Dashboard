@@ -5,6 +5,7 @@ import {SignIn} from "./pages/auth/sign-in";
 import {Dahsboard} from "./pages/app/dashboard/dashboard";
 import {Users} from "./pages/app/users/users.tsx";
 import {AssetAdministrationShells} from "./pages/app/aas/aas.tsx";
+import {Roles} from "./pages/app/roles/roles.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: '/users',
         element: <Users />
+      },
+      {
+        path: '/roles',
+        element: <Roles/>
       },
       {
         path: '/asset-administration-shells',

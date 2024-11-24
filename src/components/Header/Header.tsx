@@ -76,7 +76,7 @@ export function Header() {
                       <LockSimpleOpen size={30}/>
                     </Flex>
                   </Box>
-                  <Box transition='0.3S ease' p='0 5px' h='40px' css={{
+                  <Box onClick={() => navigate('/roles')} transition='0.3S ease' p='0 5px' h='40px' css={{
                     "&:hover": {
                       cursor: "pointer",
                       bg: "greenPigment.100",

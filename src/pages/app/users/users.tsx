@@ -13,7 +13,6 @@ import {ResponseUser} from "../../../interfaces/CurrentUser.ts";
 import {Button} from "../../../components/ui/button.tsx";
 import {Pencil, Trash} from "@phosphor-icons/react";
 import {Tooltip} from "../../../components/ui/tooltip.tsx";
-import React from "react";
 
 export function Users() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -96,7 +95,6 @@ export function Users() {
 
         <PaginationRoot
           defaultPage={1}
-          count={result?.payload.total * pageSize}
           pageSize={pageSize}
           page={page}
           onPageChange={(e) => handlePaginate(e.page)}
