@@ -1,0 +1,16 @@
+services:
+  monitoring-dashboard:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: monitoring-dashboard
+    ports:
+      - '5173:5173'
+    env_file:
+      - './.env.development'
+    networks:
+      - monitoring-network
+
+networks:
+  monitoring-network:
+    external: true
