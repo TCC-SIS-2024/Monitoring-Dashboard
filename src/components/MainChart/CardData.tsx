@@ -25,7 +25,7 @@ export function CardData({ title, children, isCurrentTemperature = false, isQtdA
             {isCurrentTemperature && (
               <>
                 <Database color="#0FA968" size={30} />
-                <Text>Digital Twin se encontra em boas condições de armazenamento.</Text>
+                <Text fontSize='sm'>Digital Twin se encontra em boas condições de armazenamento.</Text>
               </>
             )}
 

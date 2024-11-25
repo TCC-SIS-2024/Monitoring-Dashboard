@@ -7,6 +7,8 @@ interface MonitoringContextType {
   isMonitoring: boolean;
   isRealTime: boolean
   getHistorizedData: (params: HistorizedDataParams) => Promise<any>
+  qtdAnomalies: number
+  updateQtdAnomalies: () => void
 }
 
 interface MonitoringProviderProps {
@@ -18,7 +20,12 @@ export const MonitoringContext = createContext({} as MonitoringContextType)
 export function MonitoringProvider({children}: Readonly<MonitoringProviderProps>) {
   const [isMonitoring, setIsMonitoring] = useState<boolean>(false)
   const [isRealTime, setIsRealTime] = useState<boolean>(true)
+  const [qtdAnomalies, setQtdAnomalies] = useState(0);
   const historyService = new HistoryService()
+
+  const updateQtdAnomalies = useCallback(() => {
+    setQtdAnomalies((prev) => prev + 1)
+  }, [])
 
   const startMonitoring = useCallback(async () => {
     setIsMonitoring(true)
@@ -33,7 +40,7 @@ export function MonitoringProvider({children}: Readonly<MonitoringProviderProps>
   }, [])
 
   return (
-    <MonitoringContext.Provider value={{startMonitoring, isMonitoring, isRealTime, switchRealTime, getHistorizedData}}>
+    <MonitoringContext.Provider value={{updateQtdAnomalies, startMonitoring, isMonitoring, isRealTime, switchRealTime, getHistorizedData, qtdAnomalies}}>
       {children}
     </MonitoringContext.Provider>
   )

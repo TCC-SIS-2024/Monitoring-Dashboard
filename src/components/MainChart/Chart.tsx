@@ -5,6 +5,7 @@ import {SensorData} from '../../interfaces/SensorData';
 import {OpcuaParameters} from "../../interfaces/Opcua.ts";
 import {useMonitoring} from "../../hooks/useMonitoring.tsx";
 import {HistoryRangeSearch} from "../../types/history.ts";
+import {toaster} from "../../components/ui/toaster.tsx";
 
 interface ChartProps {
   isRealModeView: boolean
@@ -14,7 +15,7 @@ interface ChartProps {
 
 export function Chart({isRealModeView, opcuaParams, dateRange}: Readonly<ChartProps>) {
   const { sensorData } = useSocket()
-  const { getHistorizedDataFromAAS } = useMonitoring()
+  const { getHistorizedDataFromAAS, updateQtdAnomalies } = useMonitoring()
   const [data, setData] = useState<SensorData[]>([]);
   const [dataZoomStart, setDataZoomStart] = useState(0);
   const [dataZoomEnd, setDataZoomEnd] = useState(100);
@@ -29,6 +30,19 @@ export function Chart({isRealModeView, opcuaParams, dateRange}: Readonly<ChartPr
     }
 
   }, [sensorData])
+
+  useEffect(() => {
+    if (sensorData) {
+      if (sensorData.temperature >= 32 || sensorData.temperature <= 20) {
+        updateQtdAnomalies()
+        toaster.create({
+          description: "Anomalia detectada!",
+          type: 'error',
+          duration: 3000,
+        });
+      }
+    }
+  }, [sensorData]);
 
   useEffect(() => {
     const fetchData = async () => {

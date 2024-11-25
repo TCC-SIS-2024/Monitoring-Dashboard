@@ -76,7 +76,7 @@ export function MainChart({opcuaParams}: Readonly<MainChartProps>) {
           )}
         </Flex>
       </Box>
-      <Box w='100%' h='802px' >
+      <Box w='100%' h='700px' >
         {
           isRealTime ? (
             <Grid h='100%'

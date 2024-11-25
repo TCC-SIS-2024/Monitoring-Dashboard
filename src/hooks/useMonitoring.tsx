@@ -4,7 +4,15 @@ import {HistorizedDataParams} from "../services/history.ts";
 
 export function useMonitoring() {
 
-  const {startMonitoring, isMonitoring, isRealTime, switchRealTime, getHistorizedData} = useContext(MonitoringContext)
+  const {
+    startMonitoring,
+    isMonitoring,
+    isRealTime,
+    switchRealTime,
+    getHistorizedData,
+    qtdAnomalies,
+    updateQtdAnomalies
+  } = useContext(MonitoringContext)
 
   async function startMonitoringData() {
     try {
@@ -31,6 +39,8 @@ export function useMonitoring() {
   }
 
   return {
+    qtdAnomalies,
+    updateQtdAnomalies,
     getHistorizedDataFromAAS,
     isMonitoring,
     isRealTime,
